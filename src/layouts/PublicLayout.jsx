@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 const PublicLayout = () => {
   return (
-    <div>
+    <div className="">
       <Header />
       <div>
         <Buscar />

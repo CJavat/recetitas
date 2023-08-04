@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { RecetasProvider } from "../context/RecetasProvider";
+import RecetasContext from "../context/RecetasProvider";
 
 const useRecetas = () => {
-  return useContext(RecetasProvider);
+  return useContext(RecetasContext);
 };
 
 export default useRecetas;
