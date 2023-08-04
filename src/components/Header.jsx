@@ -31,6 +31,7 @@ const Header = () => {
           )}
         </button>
 
+        {/* //TODO: ESCONDER NAV EN AUTHLAYOUT */}
         <div className="flex justify-center items-center">
           <nav className="hidden sm:flex">Menu normal</nav>
 
@@ -39,19 +40,35 @@ const Header = () => {
               <i className="fa-solid fa-bars text-5xl" />
             </button>
 
-            {/* //TODO: HACER QUE EL MENÚ SE ESTIRE HACIA ABAJO CON MOVIMIENTO */}
             <nav
-              className={`w-1/2 transform transition duration-500 ease-in-out ${
-                menuActive ? "-translate-Y-16" : "translate-Y-16"
+              className={`bg-white text-black dark:bg-black dark:text-white absolute top-0 left-0 w-full transform visible duration-500 ease-in-out ${
+                menuActive ? "visible opacity-100" : "invisible opacity-0"
               }  `}
             >
-              <ul className="min-h-screen bg-red-400">
-                <li>Elemento 1</li>
-                <li>Elemento 2</li>
-                <li>Elemento 3</li>
-                <li>Elemento 4</li>
-                <li>Elemento 5</li>
-              </ul>
+              <div className="relative text-center pt-16">
+                <button
+                  className="absolute top-2 right-2 text-xl border rounded-md px-5 py-2"
+                  onClick={() => setMenuActive(!menuActive)}
+                >
+                  X
+                </button>
+
+                {/* //TODO: MODIFICAR */}
+                <ul className="h-screen text-2xl">
+                  <a href="#">
+                    <li>Elemento 1</li>
+                  </a>
+                  <a href="#">
+                    <li>Elemento 2</li>
+                  </a>
+                  <a href="#">
+                    <li>Elemento 3</li>
+                  </a>
+                  <a href="#">
+                    <li>Elemento 4</li>
+                  </a>
+                </ul>
+              </div>
             </nav>
           </div>
         </div>
