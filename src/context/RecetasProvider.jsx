@@ -8,6 +8,7 @@ const RecetasProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("theme") === "dark" ? true : false
   );
+  // const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     if (isDarkMode) {
@@ -21,8 +22,12 @@ const RecetasProvider = ({ children }) => {
     }
   }, [isDarkMode]);
 
+  // useEffect(() => {}, []);
+
   return (
-    <RecetasContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+    <RecetasContext.Provider
+      value={{ isDarkMode, /* userInfo, */ setIsDarkMode /* setUserInfo */ }}
+    >
       {children}
     </RecetasContext.Provider>
   );

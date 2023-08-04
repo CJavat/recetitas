@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import Buscar from "../components/Buscar";
+import Search from "../components/Search";
 import Footer from "../components/Footer";
 
 const PublicLayout = () => {
   return (
-    <div className="">
+    <div className="min-h-screen flex flex-col justify-between">
       <Header />
-      <div>
-        <Buscar />
+      <div className="px-5 flex-1">
+        {/* <Search /> */}
         <Outlet />
       </div>
       <Footer />
