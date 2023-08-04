@@ -1,15 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { useEffect } from "react";
 
 const AuthLayout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      return navigate("/");
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col justify-between px-3">
+    <div className="min-h-screen flex flex-col justify-between">
       <Header />
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex justify-center items-center px-3">
         <Outlet />
       </div>
-      <Footer />
     </div>
   );
 };

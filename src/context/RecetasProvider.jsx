@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-// import Swal from "sweetalert2";
-// import clienteAxios from "../helpers/clienteAxios";
+import Swal from "sweetalert2";
+import reqAxios from "../helpers/axios";
 
 const RecetasContext = createContext();
 
@@ -8,7 +8,8 @@ const RecetasProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("theme") === "dark" ? true : false
   );
-  // const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  const [activeToken, setActiveToken] = useState("");
 
   useEffect(() => {
     if (isDarkMode) {
@@ -22,11 +23,43 @@ const RecetasProvider = ({ children }) => {
     }
   }, [isDarkMode]);
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    const decodeToken = async () => {
+      try {
+        if (localStorage.getItem("token")) {
+          const localToken = localStorage.getItem("token");
+
+          const { data } = await reqAxios.post("/auth/decode-token", {
+            token: localToken,
+          });
+
+          setUserInfo({ id: data.id, email: data.email });
+          console.log(userInfo);
+        }
+      } catch (error) {
+        console.log(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: error.response,
+        });
+      }
+    };
+
+    decodeToken();
+  }, [Object.keys(userInfo).length]);
 
   return (
     <RecetasContext.Provider
-      value={{ isDarkMode, /* userInfo, */ setIsDarkMode /* setUserInfo */ }}
+      value={{
+        isDarkMode,
+        userInfo,
+        activeToken,
+        setIsDarkMode,
+        setUserInfo,
+        setActiveToken,
+      }}
     >
       {children}
     </RecetasContext.Provider>

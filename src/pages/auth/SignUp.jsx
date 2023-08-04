@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useRecetas from "../../hooks/useRecetas";
+import { Link, useNavigate } from "react-router-dom";
 import reqAxios from "../../helpers/axios";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const { setUserInfo } = useRecetas();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -16,8 +15,11 @@ const SignUp = () => {
   const saveData = async (e) => {
     e.preventDefault();
     if (password !== repeatPassword) {
-      console.log("PASSWORD INCORRECTORY");
-      //TODO: TERMINAR VALIDACIÓN Y MOSTRAR ALERTA CON SWITALERT2
+      Swal.fire({
+        icon: "error",
+        title: "ERROR EN LA CONTRASEÑA",
+        text: "Las contraseñas deben ser iguales",
+      });
     }
 
     const data = {
@@ -28,11 +30,17 @@ const SignUp = () => {
     };
 
     try {
-      const respuesta = await reqAxios.get("/auth/sign-up", data);
-      console.log(respuesta.data);
-      //TODOS: TERMINAR CONSULTA
+      const respuesta = await reqAxios.post("/auth/sign-up", data);
+      Swal.fire("Cuenta Creada", respuesta.data.msg, "success");
+      navigate("/auth");
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
+
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: error.response.data.msg,
+      });
     }
   };
 
@@ -90,9 +98,25 @@ const SignUp = () => {
           <input
             type="submit"
             value="Registrarme"
-            className="bg-blue-500 hover:bg-blue-400 cursor-pointer rounded-lg px-5 py-3 font-bold uppercase"
+            className="bg-blue-500 hover:bg-blue-400 cursor-pointer rounded-lg px-5 py-3 font-bold uppercase mt-10"
           />
         </form>
+
+        <div className="w-full flex flex-col sm:flex-row gap-3 justify-around text-sm mt-7">
+          <Link
+            to="/auth/forgot-password"
+            className="font-bold uppercase hover:text-blue-500"
+          >
+            Olvidé mi password
+          </Link>
+
+          <Link
+            to="/auth"
+            className="font-bold uppercase text-blue-500 hover:text-white"
+          >
+            Iniciar Sesión
+          </Link>
+        </div>
       </div>
     </div>
   );

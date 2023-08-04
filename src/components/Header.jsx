@@ -32,50 +32,50 @@ const Header = () => {
           )}
         </button>
 
-        {/* //TODO: ESCONDER NAV EN AUTHLAYOUT */}
-        <div className="flex justify-center items-center">
-          <div className="h-fit">
-            <button
-              className="sm:hidden"
-              onClick={() => setMenuActive(!menuActive)}
-            >
-              <i className="fa-solid fa-bars text-5xl" />
-            </button>
+        {localStorage.getItem("token") && (
+          <div className="flex justify-center items-center">
+            <div className="h-fit">
+              <button
+                className="sm:hidden"
+                onClick={() => setMenuActive(!menuActive)}
+              >
+                <i className="fa-solid fa-bars text-5xl" />
+              </button>
 
-            <nav
-              className={`w-full bg-white dark:bg-black text-black dark:text-white sm:visible absolute sm:relative top-0 left-0 transform visible duration-500 ease-in-out ${
-                menuActive
-                  ? "visible opacity-100"
-                  : "invisible opacity-0 sm:visible sm:opacity-100"
-              }  `}
-            >
-              <div className="relative text-center pt-16 sm:pt-0">
-                <button
-                  className="sm:hidden absolute top-2 right-2 text-xl border rounded-md px-5 py-2"
-                  onClick={() => setMenuActive(!menuActive)}
-                >
-                  X
-                </button>
+              <nav
+                className={`w-full bg-white dark:bg-black text-black dark:text-white sm:visible absolute sm:relative top-0 left-0 transform visible duration-500 ease-in-out ${
+                  menuActive
+                    ? "visible opacity-100"
+                    : "invisible opacity-0 sm:visible sm:opacity-100"
+                }  `}
+              >
+                <div className="relative text-center pt-16 sm:pt-0">
+                  <button
+                    className="sm:hidden absolute top-2 right-2 text-xl border rounded-md px-5 py-2"
+                    onClick={() => setMenuActive(!menuActive)}
+                  >
+                    X
+                  </button>
 
-                {/* //TODO: AGREGAR LAS OPCIONES REALES */}
-                <ul className="uppercase h-screen sm:h-fit text-2xl sm:text-xl font-bold sm:flex sm:justify-center sm:items-center sm:gap-3">
-                  <a href="#" className="hover:text-blue-500">
-                    <li>Agregar Receta</li>
-                  </a>
-                  <a href="#" className="hover:text-blue-500">
-                    <li>Mi Perfil</li>
-                  </a>
-                  <a href="#" className="hover:text-blue-500">
-                    <li>Mis Favoritas</li>
-                  </a>
-                  <a href="#" className="hover:text-blue-500">
-                    <li>Ajustes</li>
-                  </a>
-                </ul>
-              </div>
-            </nav>
+                  <ul className="uppercase h-screen sm:h-fit text-2xl sm:text-xl font-bold sm:flex sm:justify-center sm:items-center sm:gap-3">
+                    <a href="#" className="hover:text-blue-500">
+                      <li>Agregar Receta</li>
+                    </a>
+                    <a href="#" className="hover:text-blue-500">
+                      <li>Mi Perfil</li>
+                    </a>
+                    <a href="#" className="hover:text-blue-500">
+                      <li>Mis Favoritas</li>
+                    </a>
+                    <a href="#" className="hover:text-blue-500">
+                      <li>Ajustes</li>
+                    </a>
+                  </ul>
+                </div>
+              </nav>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
