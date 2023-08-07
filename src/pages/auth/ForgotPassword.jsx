@@ -1,11 +1,31 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
+import reqAxios from "../../helpers/axios";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //TODO: TERMINAR COMPONENTE
+
+    const sendEmail = async () => {
+      try {
+        const { data } = await reqAxios.post("/auth/forgot-password", {
+          email,
+        });
+        Swal.fire("¡EXITO!", data.msg, "success");
+      } catch (error) {
+        console.log(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: error.response.data.msg,
+        });
+      }
+    };
+
+    sendEmail();
   };
 
   return (

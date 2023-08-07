@@ -1,56 +1,65 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import reqAxios from "../../helpers/axios";
 
 const EditAccount = () => {
   const navigate = useNavigate();
+  const params = useParams();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      try {
+        const { data } = await reqAxios.get(`/auth/my-profile/${params.id}`);
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+      } catch (error) {
+        console.log(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: error.response.data.msg,
+        });
+      }
+    };
+
+    obtenerDatos();
+  }, []);
 
   const updateProfile = async (e) => {
     e.preventDefault();
-    // if (password !== repeatPassword) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "ERROR EN LA CONTRASEÑA",
-    //     text: "Las contraseñas deben ser iguales",
-    //   });
-    // }
 
-    // const data = {
-    //   firstName,
-    //   lastName,
-    //   email,
-    //   password,
-    // };
+    const data = {
+      id: params.id,
+      firstName,
+      lastName,
+    };
 
-    // try {
-    //   const respuesta = await reqAxios.post("/auth/sign-up", data);
-    //   Swal.fire("Cuenta Creada", respuesta.data.msg, "success");
-    //   navigate("/auth");
-    // } catch (error) {
-    //   console.log(error);
+    try {
+      const respuesta = await reqAxios.put("/auth/edit-account", data);
 
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "ERROR",
-    //     text: error.response.data.msg,
-    //   });
-    // }
+      Swal.fire("¡EXITO!", respuesta.data.msg, "success");
+      navigate(`/my-profile/${params.id}`);
+    } catch (error) {
+      console.log(error);
+
+      Swal.fire({
+        icon: "error",
+        title: "ERROR",
+        text: error.response.data.msg,
+      });
+    }
   };
 
-  //TODO: TERMINAR COMPONENTE
-
   return (
-    <div className="w-full">
+    <div className="w-full mt-10">
       <h2 className="text-center font-bold uppercase text-2xl sm:text-4xl">
-        Registra una cuenta y
-        <span className="text-blue-500"> registra tus recetas</span>
+        Editar
+        <span className="text-blue-500"> Cuenta</span>
       </h2>
 
       <div className="mx-auto mt-10 sm:w-[550px] py-10 px-5 bg-white dark:bg-black rounded-lg">
@@ -71,35 +80,10 @@ const EditAccount = () => {
             className="outline-none bg-transparent border-b-2 border-b-black dark:border-b-white focus:border-b-blue-500 dark:focus:border-b-blue-500 focus:placeholder:text-blue-500"
             required
           />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="outline-none bg-transparent border-b-2 border-b-black dark:border-b-white focus:border-b-blue-500 dark:focus:border-b-blue-500 focus:placeholder:text-blue-500"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="outline-none bg-transparent border-b-2 border-b-black dark:border-b-white focus:border-b-blue-500 dark:focus:border-b-blue-500 focus:placeholder:text-blue-500"
-            required
-          />
-
-          <input
-            type="password"
-            placeholder="Repite tu contraseña"
-            value={repeatPassword}
-            onChange={(e) => setRepeatPassword(e.target.value)}
-            className="outline-none bg-transparent border-b-2 border-b-black dark:border-b-white focus:border-b-blue-500 dark:focus:border-b-blue-500 focus:placeholder:text-blue-500"
-            required
-          />
 
           <input
             type="submit"
-            value="Registrarme"
+            value="Actualizar Datos"
             className="bg-blue-500 hover:bg-blue-400 cursor-pointer rounded-lg px-5 py-3 font-bold uppercase mt-10"
           />
         </form>

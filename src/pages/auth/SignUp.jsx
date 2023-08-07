@@ -51,8 +51,10 @@ const SignUp = () => {
         <span className="text-blue-500"> registra tus recetas</span>
       </h2>
 
-      <div className="mx-auto mt-10 sm:w-[550px] py-10 px-5 bg-white dark:bg-black rounded-lg">
-        <form className="flex flex-col gap-5" onSubmit={saveData}>
+      <div className="mx-auto mt-20 sm:w-[550px] py-16 px-5 bg-white dark:bg-black rounded-lg relative flex flex-col justify-center items-center">
+        <i className="fa-solid fa-user-plus px-10 py-10 rounded-full text-5xl absolute -top-16 bg-white dark:bg-black" />
+
+        <form className="flex flex-col gap-5 w-full" onSubmit={saveData}>
           <input
             type="text"
             placeholder="Nombre"

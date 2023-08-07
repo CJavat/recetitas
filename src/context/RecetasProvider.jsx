@@ -10,6 +10,7 @@ const RecetasProvider = ({ children }) => {
   );
   const [userInfo, setUserInfo] = useState({});
   const [activeToken, setActiveToken] = useState("");
+  const [mandarPeticion, setMandarPeticion] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -34,7 +35,6 @@ const RecetasProvider = ({ children }) => {
           });
 
           setUserInfo({ id: data.id, email: data.email });
-          console.log(userInfo);
         }
       } catch (error) {
         console.log(error);
@@ -48,7 +48,7 @@ const RecetasProvider = ({ children }) => {
     };
 
     decodeToken();
-  }, [Object.keys(userInfo).length]);
+  }, [Object.keys(userInfo).length, mandarPeticion]);
 
   return (
     <RecetasContext.Provider
@@ -56,9 +56,11 @@ const RecetasProvider = ({ children }) => {
         isDarkMode,
         userInfo,
         activeToken,
+        mandarPeticion,
         setIsDarkMode,
         setUserInfo,
         setActiveToken,
+        setMandarPeticion,
       }}
     >
       {children}

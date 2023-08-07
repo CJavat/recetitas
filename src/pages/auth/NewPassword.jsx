@@ -1,11 +1,38 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
+import reqAxios from "../../helpers/axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const NewPassword = () => {
+  const params = useParams();
+  const navigate = useNavigate();
   const [password, setPassword] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //TODO: TERMINAR COMPONENTE
+
+    const sendPassword = async () => {
+      try {
+        const { data } = await reqAxios.post(
+          `/auth/change-password/${params.token}`,
+          { password }
+        );
+        Swal.fire("¡EXITO!", data.msg, "success");
+        navigate("/auth");
+      } catch (error) {
+        console.log(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "ERROR",
+          text: error.response.data.msg,
+        });
+
+        navigate("/auth");
+      }
+    };
+
+    sendPassword();
   };
 
   return (

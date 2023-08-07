@@ -8,10 +8,17 @@ import PublicIndex from "./pages/public/PublicIndex";
 
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
-import EditAccount from "./pages/auth/EditAccount";
 import ConfirmAccount from "./pages/auth/ConfirmAccount";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import NewPassword from "./pages/auth/NewPassword";
+
+import EditAccount from "./pages/auth/EditAccount";
+import MyProfile from "./pages/public/MyProfile";
+import MyFavorites from "./pages/public/MyFavorites";
+import Recipe from "./pages/public/Recipe";
+import AddRecipe from "./pages/public/AddRecipe";
+import EditRecipe from "./pages/public/EditRecipe";
+import Settings from "./pages/public/Settings";
 
 function App() {
   return (
@@ -20,6 +27,13 @@ function App() {
         <Routes>
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<PublicIndex />} />
+            <Route path="/my-profile/:id" element={<MyProfile />} />
+            <Route path="/edit-profile/:id" element={<EditAccount />} />
+            <Route path="/my-favorites" element={<MyFavorites />} />
+            <Route path="/recipe/:id" element={<Recipe />} />
+            <Route path="/add-recipe" element={<AddRecipe />} />
+            <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
           <Route path="/auth" element={<AuthLayout />}>
@@ -34,7 +48,6 @@ function App() {
               path="/auth/change-password/:token"
               element={<NewPassword />}
             />
-            <Route path="/auth/edit-account/:id" element={<EditAccount />} />
           </Route>
         </Routes>
       </RecetasProvider>
@@ -43,3 +56,5 @@ function App() {
 }
 
 export default App;
+
+//TODO: AL TERMINAR AGREGAR UN SPINNER
