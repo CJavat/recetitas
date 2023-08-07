@@ -12,7 +12,6 @@ const Header = () => {
   const { isDarkMode, userInfo, setIsDarkMode, setUserInfo } = useRecetas();
 
   const cerrarSesion = () => {
-    setMenuActive(false);
     setUserInfo({});
     localStorage.removeItem("token");
     navigate("/auth");
@@ -55,7 +54,7 @@ const Header = () => {
               </button>
 
               <nav
-                className={`w-full bg-white dark:bg-black text-black dark:text-white sm:visible absolute sm:relative top-0 left-0 transform visible duration-500 ease-in-out ${
+                className={`z-50 w-full bg-white dark:bg-black text-black dark:text-white sm:visible absolute sm:relative top-0 left-0 transform visible duration-500 ease-in-out ${
                   menuActive
                     ? "visible opacity-100"
                     : "invisible opacity-0 sm:visible sm:opacity-100"
